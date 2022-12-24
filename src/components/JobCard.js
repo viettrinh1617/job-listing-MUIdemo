@@ -7,6 +7,7 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import { Divider, Paper, Chip,  } from '@mui/material';
 import ChipsArray from './SkillChip';
+import JobModal from './JobModal';
 
 const bull = (
   <Box
@@ -20,7 +21,7 @@ const bull = (
 export default function BasicCard({job}) {
   return (
     <Card sx={{ minWidth: 275, maxWidth: 500, 
-        display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center'
+        display: 'flex', flexDirection: 'column', justifyContent: 'space-between', alignItems: 'center'
         }}>
       <CardContent>
         <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
@@ -35,12 +36,11 @@ export default function BasicCard({job}) {
         </Typography>
         <Typography variant="body2">
           {job.description}
-          <br />
-          {'"a benevolent smile"'}
         </Typography>
       </CardContent>
       <CardActions>
-        <Button sx={{mb:2}} variant='contained' size="small">Learn More</Button>
+        {/* <Button sx={{mb:2}} variant='contained' size="small">Learn More</Button> */}
+        <JobModal job={job} />
       </CardActions>
     </Card>
   );

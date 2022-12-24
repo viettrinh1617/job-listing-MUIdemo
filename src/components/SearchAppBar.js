@@ -8,6 +8,14 @@ import Typography from '@mui/material/Typography';
 import InputBase from '@mui/material/InputBase';
 import MenuIcon from '@mui/icons-material/Menu';
 import SearchIcon from '@mui/icons-material/Search';
+import MenuItem from '@mui/material/MenuItem';
+import Menu from '@mui/material/Menu';
+import AccountCircle from '@mui/icons-material/AccountCircle';
+import { Modal } from '@mui/material';
+import SigninModal from './SigninModal';
+import { useAuth } from '../auth/AuthProvider'
+import { useNavigate } from 'react-router-dom';
+
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -52,6 +60,34 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 export default function SearchAppBar({setTheme, theme, icon, setSearchString}) {
+  // remove auth, setAuth, thay bang useAuth
+  const { signin, user, signout ,isAuthenticated} = useAuth();
+  const navigate = useNavigate();
+  // const [auth, setAuth] = React.useState(false);
+  const [anchorEl, setAnchorEl] = React.useState(null);
+
+  // const handleChange = (event) => {
+  //   setAuth(event.target.checked);
+  // };
+
+  const handleMenu = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  const handleSignin = () => {
+    signin();
+    setAnchorEl(null);
+  }
+
+  const handleSignout = () => {
+    // setAuth(false);
+    signout(()=> navigate("/"));
+  }
+
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
@@ -87,6 +123,43 @@ export default function SearchAppBar({setTheme, theme, icon, setSearchString}) {
               }
             />
           </Search>
+          {!isAuthenticated && (
+            <div>
+              <SigninModal />
+            </div>
+          )}
+          {isAuthenticated && (
+            <div>
+              <IconButton
+                size="large"
+                aria-label="account of current user"
+                aria-controls="menu-appbar"
+                aria-haspopup="true"
+                onClick={handleMenu}
+                color="inherit"
+              >
+                <AccountCircle />
+              </IconButton>
+              <Menu
+                id="menu-appbar"
+                anchorEl={anchorEl}
+                anchorOrigin={{
+                  vertical: 'top',
+                  horizontal: 'right',
+                }}
+                keepMounted
+                transformOrigin={{
+                  vertical: 'top',
+                  horizontal: 'right',
+                }}
+                open={Boolean(anchorEl)}
+                onClose={handleClose}
+              >
+                <MenuItem onClick={handleClose}>Profile</MenuItem>
+                <MenuItem onClick={handleSignout}>Sign out</MenuItem>
+              </Menu>
+            </div>
+          )}
 
         </Toolbar>
       </AppBar>

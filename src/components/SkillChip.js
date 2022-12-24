@@ -19,7 +19,7 @@ export default function ChipsArray(chipData) {
         listStyle: 'none',
         p: 0.5,
         m: 0,
-        mb: 1
+        mb: 1,
       }}
       component="ul"
     >
