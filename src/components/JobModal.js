@@ -6,6 +6,10 @@ import Modal from '@mui/material/Modal';
 import { Divider } from '@mui/material';
 import ChipsArray from './SkillChip';
 
+import { useNavigate, useParams } from 'react-router-dom';
+import { useAuth } from '../auth/AuthProvider';
+import api from "../data/fetchData"
+
 const style = {
   position: 'absolute',
   top: '50%',
@@ -20,15 +24,35 @@ const style = {
 };
 
 export default function JobModal({job}) {
-  const [open, setOpen] = React.useState(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+  const params = useParams();
+  const { signin, user, signout ,isAuthenticated} = useAuth();
+  const navigate = useNavigate();
+
+  const [jobOpen, setJobOpen] = React.useState(false);
+  
+  const handleOpen = () => {
+      setJobOpen(isAuthenticated);
+      navigate(`/jobs/${job.id}`);
+  }
+          // { if(isAuthenticated===true){
+          //  setOpen(true);
+          //  navigate(`/jobs/${job.id}`);
+          // } else {
+          //   setOpen(false);
+          //   navigate(`/jobs/${job.id}`);
+            
+          // }}
+          
+  const handleClose = () => {
+    setJobOpen(false);
+    navigate("/")};
 
   return (
     <div>
       <Button onClick={handleOpen}>Learn More</Button>
-      <Modal
-        open={open}
+      
+        <Modal
+        open={jobOpen}
         onClose={handleClose}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
@@ -53,7 +77,11 @@ export default function JobModal({job}) {
                 <Typography variant='body2'>{job.active&&`Active`}</Typography>            
                 <Typography variant='body2'>{job.remote&&`Remote`}</Typography>            
         </Box>
-      </Modal>
+        </Modal>
+  
+
     </div>
   );
+
+
 }

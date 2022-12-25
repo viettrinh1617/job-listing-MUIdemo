@@ -25,7 +25,6 @@ const style = {
   flexDirection: 'column',
 };
 
-// không cần open, setOpen nữa vì component này chỉ render khi location route match /login
 export default function SigninModal() {
   const { signin, user, signout ,isAuthenticated} = useAuth();
 
@@ -35,23 +34,23 @@ export default function SigninModal() {
   const location = useLocation();
 
   const onSubmit = (data) => 
-    {   
-        signin(data, () => navigate("/"));
-        console.log(data);
-        console.log(location);
-        // handleClose();
-
-        // navigate đến state.currentLocation hoặc homepage
+    {   const path = location.pathname;
+        console.log(path);
+        signin(data.email, () => navigate("/login"));
+        handleClose();
+        navigate(path);
     }
-  const [open, setOpen] = React.useState(true);
+  const [open, setOpen] = React.useState((location.pathname!=="/")&&!isAuthenticated);
   const handleOpen = () => {
             setOpen(true);
-            navigate("/login")
+            navigate(location.pathname);
             }
   const handleClose = () => {
         setOpen(false);
-        navigate("/");
+        navigate(-1);
   }
+
+
   return (
     <>
         <Button
@@ -81,10 +80,10 @@ export default function SigninModal() {
       >
         <form onSubmit={handleSubmit(onSubmit)}>  
         <Box sx={style}>
-            <TextField sx={{mb: 4}} id="username" label="Username" variant="outlined"
+            <TextField sx={{mb: 4}} id="username" label="Username" variant="outlined" defaultValue='coderschooler'
                         type="username"
                         {...register ("email")} />
-            <TextField sx={{mb: 4}} id="password" label="Password" variant="filled" 
+            <TextField sx={{mb: 4}} id="password" label="Password" variant="filled" defaultValue='12345'
                         type="password"
                         {...register ("password")} />  
             <Button type='submit' variant='contained'>Sign in</Button>       

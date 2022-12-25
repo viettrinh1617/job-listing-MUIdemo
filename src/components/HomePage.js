@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import Grid from '@mui/material/Grid';
 import { Outlet } from 'react-router-dom';
 import { Container } from '@mui/system';
@@ -11,7 +11,8 @@ import Brightness7Icon from '@mui/icons-material/Brightness7';
 import BasicPagination from './BasicPagination';
 import SearchAppBar from './SearchAppBar';
 import BasicCard from './JobCard';
-import jobs from '../jobs.json';
+import api from "../data/fetchData";
+// import jobs from "../data/jobs.json";
 
 const lightTheme = {
     palette: {
@@ -34,6 +35,17 @@ function HomePage({ theme, setTheme }) {
   const [pageSize, setPageSize] = useState(5);
   const [page, setPage] = useState(1);
   const [searchString, setSearchString] = useState("")
+
+  //fetch jobs:
+  const [jobs, setJobs] = useState([]);
+  useEffect(() => {
+    const fetch = async () => {
+      const data = await api.getJobs(page, searchString);
+      setJobs(data.jobs);
+    };
+    fetch();   
+  }, [page, searchString])
+
   const filteredJobs = jobs
   .filter(job => (job.title.toLowerCase().includes(searchString.toLowerCase())))
     

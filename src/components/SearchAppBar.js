@@ -78,10 +78,10 @@ export default function SearchAppBar({setTheme, theme, icon, setSearchString}) {
     setAnchorEl(null);
   };
 
-  const handleSignin = () => {
-    signin();
-    setAnchorEl(null);
-  }
+  // const handleSignin = () => {
+  //   signin();
+  //   setAnchorEl(null);
+  // }
 
   const handleSignout = () => {
     // setAuth(false);
@@ -90,7 +90,7 @@ export default function SearchAppBar({setTheme, theme, icon, setSearchString}) {
 
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="static">
+      <AppBar position="fixed">
         <Toolbar>
           <IconButton
             size="large"
@@ -130,6 +130,7 @@ export default function SearchAppBar({setTheme, theme, icon, setSearchString}) {
           )}
           {isAuthenticated && (
             <div>
+              
               <IconButton
                 size="large"
                 aria-label="account of current user"
@@ -139,6 +140,12 @@ export default function SearchAppBar({setTheme, theme, icon, setSearchString}) {
                 color="inherit"
               >
                 <AccountCircle />
+                <Typography 
+                variant="body1"
+                noWrap
+                component="div"
+                sx={{ml:1, flexGrow: 1, display: { xs: 'none', sm: 'block' } }}
+              >{user}</Typography>
               </IconButton>
               <Menu
                 id="menu-appbar"
