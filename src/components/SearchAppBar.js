@@ -11,7 +11,7 @@ import SearchIcon from '@mui/icons-material/Search';
 import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
 import AccountCircle from '@mui/icons-material/AccountCircle';
-import { Modal } from '@mui/material';
+
 import SigninModal from './SigninModal';
 import { useAuth } from '../auth/AuthProvider'
 import { useNavigate } from 'react-router-dom';
@@ -167,7 +167,9 @@ export default function SearchAppBar({setTheme, theme, icon, setSearchString}) {
               </Menu>
             </div>
           )}
-
+          <IconButton sx={{ ml: 1 }} onClick={() => setTheme(!theme)} color="inherit">
+            {icon}
+          </IconButton>
         </Toolbar>
       </AppBar>
     </Box>

@@ -51,7 +51,7 @@ function HomePage({ theme, setTheme }) {
     
   return (
     <>
-      <SearchAppBar setSearchString = {setSearchString} /> 
+      <SearchAppBar setSearchString = {setSearchString} icon={icon} theme={theme} setTheme={setTheme}/> 
       <IconButton sx={{ ml: 1 }} onClick={() => setTheme(!theme)} color="inherit">
         {icon}
       </IconButton>
