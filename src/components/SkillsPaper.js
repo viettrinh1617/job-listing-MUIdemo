@@ -4,6 +4,7 @@ import Chip from '@mui/material/Chip';
 import Paper from '@mui/material/Paper';
 import TagFacesIcon from '@mui/icons-material/TagFaces';
 
+
 const ListItem = styled('li')(({ theme }) => ({
   margin: theme.spacing(0.5),
 }));
@@ -20,10 +21,12 @@ export default function ChipsArray(chipData) {
         p: 0.5,
         m: 0,
         mb: 1,
+        backgroundColor: (theme) => theme.palette.primary.dark,
+        
       }}
       component="ul"
     >
-      {chipData.chipData.slice(0,4).map((data) => {
+      {chipData.skills.slice(0,4).map((data) => {
         
         let icon;
 
@@ -36,7 +39,7 @@ export default function ChipsArray(chipData) {
             <Chip
               icon={icon}
               label={data}
-              sx={{backgroundColor: "darkmagenta"}}
+              sx={{backgroundColor: "darkmagenta", color: (theme) => theme.palette.common.white }}
             />
           </ListItem>
         );

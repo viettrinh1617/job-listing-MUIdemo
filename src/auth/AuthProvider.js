@@ -1,52 +1,25 @@
-import React, { useState, useContext, createContext, useReducer } from "react";
-import authReducer from "./Auth";
-
-const initState = {
-  isAuthenticated: false,
-  user: null,
-  signin: (newUser, callback) => {},
-  signout: (callback) => {}
-}
-
-const AuthContext = createContext(initState);
-
-export function useAuth() {
-  return useContext(AuthContext);
-}
+import React, { useState } from "react";
+import Auth from "./Auth";
+import AuthContext from "./AuthContext";
 
 function AuthProvider({ children }) {
-  // let [user, setUser] = useState(null);
+  let [user, setUser] = useState(null);
 
-  const [{
-    isAuthenticated,
-    user,
-    
-  }, dispatch] = useReducer(authReducer, initState);
-
-  const signin = (newUser, callback) => {
-    dispatch({
-      type: 'signin',
-      data: newUser
+  let singin = (newUser, callback) => {
+    return Auth.signin(() => {
+      setUser(newUser);
+      callback();
     });
-
-    callback();
   };
 
-  const signout = (callback) => {
-    dispatch({
-      type: 'signout'
+  let signout = (callback) => {
+    return Auth.signout(() => {
+      setUser(null);
+      callback();
     });
-
-    callback();
   };
 
-  const value = {
-    isAuthenticated,
-    user, 
-    signin,
-    signout
-  };
-
+  let value = { user, singin, signout };
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }
 
