@@ -45,7 +45,7 @@ function JobCard({ description, skills, id, title }) {
         height="100%"
         padding="5px"
       >
-        <CardContent sx={{ maxHeight: '250px',overflow: "scroll", textOverflow: "fade"}}>
+        <CardContent sx={{ maxHeight: '250px',overflow: "hidden", textOverflow: "fade"}}>
           <Typography
             variant="subtitle1"
             component="div"
